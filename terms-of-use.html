@@ -15,13 +15,20 @@
   html { scroll-behavior: smooth; }
   body { font-family: var(--sans); color: var(--navy); background: var(--white); line-height: 1.6; }
 
-  nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 4rem; background: rgba(27,42,74,0.97); }
-  .nav-brand { font-family: var(--serif); font-size: 1rem; color: #fff; letter-spacing: 0.04em; text-decoration: none; }
-  .nav-brand span { color: #C9A84C; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+  .nav-wrap { position: sticky; top: 0; z-index: 100; background: rgba(27,42,74,0.97); }
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.95rem 4rem; flex-wrap: nowrap; }
+  .nav-brand { font-family: var(--serif); font-size: clamp(0.82rem, 1.4vw, 1rem); color: #fff; letter-spacing: 0.03em; text-decoration: none; white-space: nowrap; min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
+  .nav-brand .nav-sep { color: #C9A84C; margin: 0 0.35em; }
+  .nav-brand .nav-tagline { color: #fff; }
+  .nav-toggle { display: none; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.2); background: transparent; border-radius: 2px; cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 0; flex-shrink: 0; }
+  .nav-toggle span { display: block; width: 18px; height: 1.5px; background: #fff; transition: transform 0.25s ease, opacity 0.2s; }
+  .nav-wrap.is-open .nav-toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-wrap.is-open .nav-toggle span:nth-child(2) { opacity: 0; }
+  .nav-wrap.is-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .nav-links { display: flex; align-items: center; gap: clamp(0.85rem, 1.8vw, 2rem); list-style: none; flex-shrink: 0; flex-wrap: nowrap; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
   .nav-links a:hover { color: #C9A84C; }
-  .nav-cta { background: #C9A84C !important; color: #1B2A4A !important; padding: 0.5rem 1.2rem; border-radius: 2px; font-weight: 700 !important; }
+  .nav-cta { background: #C9A84C !important; color: #1B2A4A !important; padding: 0.5rem 1.1rem; border-radius: 2px; font-weight: 700 !important; }
 
   .page-hero { background: linear-gradient(160deg, #1B2A4A 0%, #111d33 55%, #0d1626 100%); padding: 4.5rem 4rem 3.5rem; }
   .page-hero .label { font-size: 0.67rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #C9A84C; margin-bottom: 0.8rem; }
@@ -50,17 +57,37 @@
   .footer-links a:hover { color: #C9A84C; }
   .footer-compliance { font-size: 0.68rem; color: rgba(255,255,255,0.28); line-height: 1.7; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.2rem; }
 
-  @media (max-width: 768px) {
-    nav, .page-hero, .legal, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-    .nav-links { display: none; }
+  @media (max-width: 1100px) {
+    nav { padding: 0.9rem 2rem; }
+    .nav-brand .nav-tagline,
+    .nav-brand .nav-sep { display: none; }
+  }
+  @media (max-width: 900px) {
+    nav { padding: 0.85rem 1.25rem; }
+    .page-hero, .legal, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(17,29,51,0.98); flex-direction: column; align-items: stretch;
+      gap: 0; padding: 0.5rem 0 1rem; border-bottom: 1px solid rgba(201,168,76,0.15);
+      display: none;
+    }
+    .nav-wrap.is-open .nav-links { display: flex; }
+    .nav-links li { border-top: 1px solid rgba(255,255,255,0.06); }
+    .nav-links a { display: block; padding: 0.95rem 1.25rem; }
+    .nav-cta { margin: 0.5rem 1.25rem 0; text-align: center; }
     .page-hero h1 { font-size: 2rem; }
   }
 </style>
 </head>
 <body>
 
+<div class="nav-wrap">
 <nav>
-  <a class="nav-brand" href="index.html">Sherri Haskell <span>|</span> Medicare Strategic Specialist</a>
+  <a class="nav-brand" href="index.html">Sherri Haskell<span class="nav-sep">|</span><span class="nav-tagline">Medicare Strategic Specialist</span></a>
+  <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="index.html#distinction">The Distinction</a></li>
     <li><a href="index.html#how">How I Work</a></li>
@@ -68,6 +95,7 @@
     <li><a href="index.html#contact" class="nav-cta">Schedule a Conversation</a></li>
   </ul>
 </nav>
+</div>
 
 <header class="page-hero">
   <div class="label">Legal</div>
@@ -160,5 +188,22 @@
   <p class="footer-compliance">Coast to Coast Health Insurance Solutions, LLC is not a government agency and is not affiliated with or endorsed by any government agency. We do not offer every plan available in your area. We represent multiple Medicare carriers offering a variety of Medicare plans and coverage options, depending on your location. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Assistance Program (SHIP) to obtain information on all of your Medicare options. CA License #4496898.</p>
 </footer>
 
+<script>
+(function () {
+  var wrap = document.querySelector('.nav-wrap');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!toggle || !wrap) return;
+  toggle.addEventListener('click', function () {
+    var open = wrap.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  wrap.querySelectorAll('.nav-links a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      wrap.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+</script>
 </body>
 </html>

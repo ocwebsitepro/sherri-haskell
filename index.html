@@ -67,21 +67,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 0.95rem var(--pad-x);
     max-width: calc(var(--inner) + 8rem);
     margin: 0 auto;
+    flex-wrap: nowrap;
   }
   .nav-brand {
     font-family: var(--serif);
-    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    font-size: clamp(0.82rem, 1.4vw, 1rem);
     color: #fff;
     letter-spacing: 0.03em;
     line-height: 1.35;
-    flex-shrink: 1;
+    white-space: nowrap;
     min-width: 0;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .nav-brand span { color: var(--gold); }
+  .nav-brand .nav-sep { color: var(--gold); margin: 0 0.35em; }
+  .nav-brand .nav-tagline { color: #fff; }
   .nav-toggle {
     display: none;
     width: 42px;
@@ -95,6 +100,7 @@
     flex-direction: column;
     gap: 5px;
     padding: 0;
+    flex-shrink: 0;
   }
   .nav-toggle span {
     display: block;
@@ -110,8 +116,10 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: clamp(1rem, 2.2vw, 2rem);
+    gap: clamp(0.85rem, 1.8vw, 2rem);
     list-style: none;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
   }
   .nav-links a {
     color: rgba(255,255,255,0.78);
@@ -868,6 +876,8 @@
     .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .step:nth-child(4),
     .step:nth-child(5) { grid-column: span 1; }
+    .nav-brand .nav-tagline,
+    .nav-brand .nav-sep { display: none; }
   }
 
   @media (max-width: 900px) {
@@ -932,7 +942,7 @@
 
 <div class="nav-wrap">
 <nav>
-  <div class="nav-brand">Sherri Haskell <span>|</span> Medicare Strategic Specialist</div>
+  <div class="nav-brand">Sherri Haskell<span class="nav-sep">|</span><span class="nav-tagline">Medicare Strategic Specialist</span></div>
   <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -1132,10 +1142,10 @@
   <div class="footer-main">
     <div class="footer-brand">Sherri Haskell <span>|</span> Medicare Strategic Specialist</div>
     <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Use</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-use.html">Terms of Use</a>
       <a href="#contact">Schedule a Conversation</a>
-      <a href="#">&copy; 2025 Sherri Haskell</a>
+      <a href="#">&copy; 2026 Sherri Haskell</a>
     </div>
   </div>
   <p class="footer-compliance">Coast to Coast Health Insurance Solutions, LLC is not a government agency and is not affiliated with or endorsed by any government agency. We do not offer every plan available in your area. We represent multiple Medicare carriers offering a variety of Medicare plans and coverage options, depending on your location. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Assistance Program (SHIP) to obtain information on all of your Medicare options. CA License #4496898.</p>
