@@ -177,7 +177,7 @@
   .nav-links a:hover { color: var(--gold); }
   .nav-cta {
     background: var(--gold) !important;
-    color: var(--navy) !important;
+    color: #fff !important;
     padding: 0.55rem 1.15rem !important;
     border-radius: var(--radius);
     font-weight: 700 !important;
@@ -215,7 +215,7 @@
     min-height: inherit;
   }
   .hero-copy {
-    max-width: 34rem;
+    max-width: 42rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -228,6 +228,7 @@
     line-height: 1.12;
     letter-spacing: -0.015em;
     margin: 0;
+    max-width: 15.5em;
   }
   .hero-title em {
     font-style: italic;
@@ -260,7 +261,7 @@
     align-items: center;
     gap: 0.55rem;
     background: var(--navy);
-    color: var(--gold);
+    color: #fff;
     text-decoration: none;
     font-size: 0.72rem;
     font-weight: 700;
@@ -273,7 +274,7 @@
   }
   .hero-cta:hover {
     background: var(--navy-deep);
-    color: var(--gold-light);
+    color: #fff;
   }
   .hero-cta span { font-size: 1rem; line-height: 1; }
   @media (max-width: 900px) {
@@ -289,7 +290,7 @@
       align-items: flex-end;
       padding-bottom: clamp(2rem, 6vw, 3rem);
     }
-    .hero-copy { max-width: 36rem; }
+    .hero-copy { max-width: 42rem; }
   }
 
   /* —— Shared —— */
@@ -307,7 +308,7 @@
   }
   .btn-gold {
     background: var(--gold);
-    color: var(--navy);
+    color: #fff;
   }
   .btn-gold:hover { background: var(--gold-light); }
 
@@ -426,15 +427,22 @@
     line-height: 1.45;
     max-width: 42rem;
   }
-  .matters blockquote .quote-accent {
-    color: var(--gold);
+  .quote-accent {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
     font-weight: 700;
+    color: var(--gold);
+    line-height: 1.45;
+  }
+  .matters blockquote .quote-accent {
+    font-size: inherit;
   }
   .matters-grid {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     gap: clamp(2rem, 4vw, 3.5rem);
-    align-items: center;
+    align-items: stretch;
   }
   .matters-text {
     display: flex;
@@ -450,14 +458,17 @@
   .matters-img {
     position: relative;
     width: 100%;
+    min-height: 0;
+    align-self: stretch;
   }
   .matters-img img {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
-    height: auto;
-    max-width: 100%;
-    object-fit: contain;
-    object-position: center;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
     border-radius: var(--radius);
     box-shadow: 0 12px 40px rgba(27,42,74,0.12);
   }
@@ -586,7 +597,7 @@
     align-self: flex-start;
     margin-top: 0.35rem;
     background: var(--navy);
-    color: var(--gold);
+    color: #fff;
     text-decoration: none;
     font-size: 0.72rem;
     font-weight: 700;
@@ -598,7 +609,7 @@
   }
   .trina-cta:hover {
     background: var(--navy-deep);
-    color: var(--gold-light);
+    color: #fff;
   }
   .trina-cta span { font-size: 1rem; line-height: 1; }
 
@@ -652,6 +663,11 @@
   .pros-left .section-h2 {
     max-width: 22ch;
     margin-bottom: 1rem;
+  }
+  .pros-left .section-h2 .quote-accent {
+    display: block;
+    max-width: 28ch;
+    margin-top: 0.45rem;
   }
   .pros-intro {
     font-size: 1rem;
@@ -712,7 +728,7 @@
   }
   .pull-quote {
     background: var(--navy);
-    padding: 2rem 1.85rem 1.9rem;
+    padding: 2.6rem 1.85rem 2.1rem;
     position: relative;
   }
   .pull-quote::before {
@@ -722,7 +738,7 @@
     color: var(--gold);
     opacity: 0.22;
     position: absolute;
-    top: -0.15rem;
+    top: 0.55rem;
     left: 1.1rem;
     line-height: 1;
   }
@@ -912,8 +928,8 @@
   .cta-strip p {
     font-family: var(--serif);
     font-style: italic;
-    color: var(--navy);
-    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: #fff;
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
     font-weight: 700;
   }
   footer {
@@ -936,7 +952,7 @@
   }
   .footer-brand img {
     display: block;
-    width: min(240px, 68vw);
+    width: min(400px, 84vw);
     height: auto;
     margin: 0 auto;
   }
@@ -1020,6 +1036,10 @@
     .trina-block {
       grid-template-columns: 1fr;
     }
+    .matters-img {
+      aspect-ratio: 4 / 3;
+      min-height: 240px;
+    }
 
     .distinction-headline { max-width: none; }
     .who .section-h2,
@@ -1097,7 +1117,7 @@
 <section class="who reveal">
   <div class="inner">
     <div class="label">Who I Work With</div>
-    <h2 class="section-h2">Two audiences. One unwavering standard.</h2>
+    <h2 class="section-h2">Two audiences.<br>One unwavering standard.</h2>
     <div class="cards">
       <div class="card">
         <h3>For Individuals Approaching Medicare &amp; Solving Existing Issues</h3>
@@ -1184,7 +1204,7 @@
     <div class="label">For Financial Professionals</div>
     <div class="pros-grid">
       <div class="pros-left">
-        <h2 class="section-h2">Your clients are making Medicare decisions.<br>Are those decisions aligned with their financial plan?</h2>
+        <h2 class="section-h2">Your clients are making Medicare decisions.<br><span class="quote-accent">Are those decisions aligned with their financial plan?</span></h2>
         <p class="pros-intro">For high-income clients, Medicare isn&rsquo;t just a healthcare decision &mdash; it&rsquo;s a financial event. IRMAA surcharges, income timing around RMDs and Roth conversions, capital gains events &mdash; the intersections are numerous, consequential, and frequently overlooked.</p>
         <div class="mistakes">
           <div class="mistake"><h4>1. Overlooking IRMAA Planning</h4><p>The two-year lookback creates delayed premium impacts. Income events can trigger significant and unexpected surcharges that catch clients off guard.</p></div>
