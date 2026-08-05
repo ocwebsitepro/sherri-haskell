@@ -15,11 +15,17 @@
   html { scroll-behavior: smooth; }
   body { font-family: var(--sans); color: var(--navy); background: var(--white); line-height: 1.6; }
 
-  .nav-wrap { position: sticky; top: 0; z-index: 100; background: rgba(27,42,74,0.97); }
-  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.95rem 4rem; flex-wrap: nowrap; }
-  .nav-brand { font-family: var(--serif); font-size: clamp(0.82rem, 1.4vw, 1rem); color: #fff; letter-spacing: 0.03em; text-decoration: none; white-space: nowrap; min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis; }
-  .nav-brand .nav-sep { color: #C9A84C; margin: 0 0.35em; }
-  .nav-brand .nav-tagline { color: #fff; }
+  .nav-wrap { position: sticky; top: 0; z-index: 100; background: rgba(27,42,74,0.97); transition: box-shadow 0.45s ease; }
+  .nav-wrap.is-scrolled { box-shadow: 0 8px 24px rgba(13, 22, 38, 0.28); }
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.15rem clamp(1.25rem, 4vw, 4rem); flex-wrap: nowrap; transition: padding 0.45s ease; }
+  .nav-wrap.is-scrolled nav { padding-top: 0.7rem; padding-bottom: 0.7rem; }
+  .nav-brand { --logo-full-h: clamp(56px, 7vw, 72px); --logo-icon-h: clamp(40px, 5vw, 48px); position: relative; display: block; flex: 0 0 auto; height: var(--logo-full-h); width: min(420px, 54vw); text-decoration: none; transition: height 0.45s ease, width 0.45s ease 0.12s; }
+  .nav-wrap.is-scrolled .nav-brand { height: var(--logo-icon-h); width: var(--logo-icon-h); transition: height 0.45s ease, width 0.45s ease 0.18s; }
+  .nav-brand img { position: absolute; left: 0; top: 50%; display: block; width: auto; max-width: none; object-fit: contain; object-position: left center; transform: translateY(-50%); backface-visibility: hidden; will-change: opacity; }
+  .nav-logo-full { height: var(--logo-full-h); opacity: 1; transition: opacity 0.4s ease; }
+  .nav-logo-icon { height: var(--logo-icon-h); opacity: 0; pointer-events: none; transition: opacity 0.4s ease 0.08s; }
+  .nav-wrap.is-scrolled .nav-logo-full { opacity: 0; pointer-events: none; transition: opacity 0.28s ease; }
+  .nav-wrap.is-scrolled .nav-logo-icon { opacity: 1; pointer-events: auto; transition: opacity 0.4s ease 0.12s; }
   .nav-toggle { display: none; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,0.2); background: transparent; border-radius: 2px; cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 5px; padding: 0; flex-shrink: 0; }
   .nav-toggle span { display: block; width: 18px; height: 1.5px; background: #fff; transition: transform 0.25s ease, opacity 0.2s; }
   .nav-wrap.is-open .nav-toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -48,19 +54,17 @@
   .legal .note { background: #fff; border-left: 3px solid #C9A84C; padding: 1.2rem 1.4rem; margin: 1.5rem 0; }
   .legal .note p { margin-bottom: 0; }
 
-  footer { background: #0d1626; padding: 2rem 4rem; }
-  .footer-main { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
-  .footer-brand { font-family: var(--serif); font-size: 0.9rem; color: rgba(255,255,255,0.5); }
-  .footer-brand span { color: #C9A84C; }
-  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  footer { background: #0d1626; padding: 2.75rem clamp(1.25rem, 4vw, 4rem) 2.5rem; text-align: center; }
+  .footer-main { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 1.75rem; gap: 1.5rem; }
+  .footer-brand { display: block; text-decoration: none; }
+  .footer-brand img { display: block; width: min(240px, 68vw); height: auto; margin: 0 auto; }
+  .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
   .footer-links a { font-size: 0.72rem; color: rgba(255,255,255,0.42); text-decoration: none; }
   .footer-links a:hover { color: #C9A84C; }
-  .footer-compliance { font-size: 0.68rem; color: rgba(255,255,255,0.28); line-height: 1.7; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.2rem; }
+  .footer-compliance { font-size: 0.68rem; color: rgba(255,255,255,0.28); line-height: 1.7; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem; max-width: 52rem; margin: 0 auto; text-align: center; }
 
   @media (max-width: 1100px) {
     nav { padding: 0.9rem 2rem; }
-    .nav-brand .nav-tagline,
-    .nav-brand .nav-sep { display: none; }
   }
   @media (max-width: 900px) {
     nav { padding: 0.85rem 1.25rem; }
@@ -84,7 +88,10 @@
 
 <div class="nav-wrap">
 <nav>
-  <a class="nav-brand" href="index.html">Sherri Haskell<span class="nav-sep">|</span><span class="nav-tagline">Medicare Strategic Specialist</span></a>
+  <a class="nav-brand" href="index.html" aria-label="Sherri Haskell">
+    <img class="nav-logo-full" src="assets/logo-header.png?v=4" alt="Sherri Haskell, Medicare Strategy Specialist" />
+    <img class="nav-logo-icon" src="assets/logo-sh.png" alt="" aria-hidden="true" />
+  </a>
   <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
@@ -177,7 +184,9 @@
 
 <footer>
   <div class="footer-main">
-    <div class="footer-brand">Sherri Haskell <span>|</span> Medicare Strategic Specialist</div>
+    <a class="footer-brand" href="index.html" aria-label="Sherri Haskell">
+      <img src="assets/logo-footer.png" alt="Sherri Haskell, Medicare Strategy Specialist" />
+    </a>
     <div class="footer-links">
       <a href="privacy-policy.html">Privacy Policy</a>
       <a href="terms-of-use.html">Terms of Use</a>
@@ -192,7 +201,29 @@
 (function () {
   var wrap = document.querySelector('.nav-wrap');
   var toggle = document.querySelector('.nav-toggle');
-  if (!toggle || !wrap) return;
+  if (!wrap) return;
+  var scrolled = false;
+  var enterAt = 72;
+  var exitAt = 18;
+  var ticking = false;
+  var applyScrollState = function () {
+    ticking = false;
+    var y = window.scrollY || window.pageYOffset || 0;
+    var next = scrolled ? y > exitAt : y >= enterAt;
+    if (next !== scrolled) {
+      scrolled = next;
+      wrap.classList.toggle('is-scrolled', scrolled);
+    }
+  };
+  var onScroll = function () {
+    if (!ticking) {
+      ticking = true;
+      window.requestAnimationFrame(applyScrollState);
+    }
+  };
+  applyScrollState();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  if (!toggle) return;
   toggle.addEventListener('click', function () {
     var open = wrap.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
