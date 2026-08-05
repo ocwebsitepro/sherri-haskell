@@ -17,8 +17,8 @@
 
   .nav-wrap { position: sticky; top: 0; z-index: 100; background: rgba(27,42,74,0.97); transition: box-shadow 0.45s ease; }
   .nav-wrap.is-scrolled { box-shadow: 0 8px 24px rgba(13, 22, 38, 0.28); }
-  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.15rem clamp(1.25rem, 4vw, 4rem); flex-wrap: nowrap; transition: padding 0.45s ease; }
-  .nav-wrap.is-scrolled nav { padding-top: 0.7rem; padding-bottom: 0.7rem; }
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.55rem clamp(1.25rem, 4vw, 4rem); flex-wrap: nowrap; transition: padding 0.45s ease; }
+  .nav-wrap.is-scrolled nav { padding-top: 0.4rem; padding-bottom: 0.4rem; }
   .nav-brand { --logo-full-h: clamp(56px, 7vw, 72px); --logo-icon-h: clamp(40px, 5vw, 48px); position: relative; display: block; flex: 0 0 auto; height: var(--logo-full-h); width: min(420px, 54vw); text-decoration: none; transition: height 0.45s ease, width 0.45s ease 0.12s; }
   .nav-wrap.is-scrolled .nav-brand { height: var(--logo-icon-h); width: var(--logo-icon-h); transition: height 0.45s ease, width 0.45s ease 0.18s; }
   .nav-brand img { position: absolute; left: 0; top: 50%; display: block; width: auto; max-width: none; object-fit: contain; object-position: left center; transform: translateY(-50%); backface-visibility: hidden; will-change: opacity; }
@@ -64,10 +64,10 @@
   .footer-compliance { font-size: 0.68rem; color: rgba(255,255,255,0.28); line-height: 1.7; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem; max-width: 52rem; margin: 0 auto; text-align: center; }
 
   @media (max-width: 1100px) {
-    nav { padding: 0.9rem 2rem; }
+    nav { padding: 0.55rem 2rem; }
   }
   @media (max-width: 900px) {
-    nav { padding: 0.85rem 1.25rem; }
+    nav { padding: 0.55rem 1.25rem; }
     .page-hero, .legal, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
     .nav-toggle { display: inline-flex; }
     .nav-links {
