@@ -277,20 +277,72 @@
     color: #fff;
   }
   .hero-cta span { font-size: 1rem; line-height: 1; }
+  .hero-media { display: none; }
+
+  /* Tablet: keep full-bleed photo, no white wash over the face */
   @media (max-width: 900px) {
     .hero {
       min-height: clamp(520px, 85vh, 700px);
       background-position: 72% center;
     }
     .hero::before {
-      background:
-        linear-gradient(180deg, rgba(247,245,240,0.9) 0%, rgba(247,245,240,0.78) 42%, rgba(247,245,240,0.35) 68%, rgba(247,245,240,0.12) 100%);
+      background: linear-gradient(180deg, transparent 42%, rgba(13, 22, 38, 0.55) 100%);
     }
     .hero-inner {
       align-items: flex-end;
       padding-bottom: clamp(2rem, 6vw, 3rem);
     }
     .hero-copy { max-width: 42rem; }
+    .hero-title,
+    .hero-lead { color: #fff; }
+    .hero-sub { color: rgba(255,255,255,0.82); }
+    .hero-cta {
+      background: var(--gold);
+      color: #fff;
+    }
+    .hero-cta:hover {
+      background: var(--gold-light);
+      color: #fff;
+    }
+  }
+
+  /* Mobile: photo stacked above navy content block */
+  @media (max-width: 640px) {
+    .hero {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--navy);
+    }
+    .hero::before { display: none; }
+    .hero-media {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #d9cfc0 url("assets/hero.png") center 18% / cover no-repeat;
+      flex-shrink: 0;
+    }
+    .hero-inner {
+      align-items: stretch;
+      min-height: 0;
+      padding: 2rem var(--pad-x) 2.35rem;
+      background: var(--navy);
+    }
+    .hero-copy {
+      max-width: none;
+    }
+    .hero-title,
+    .hero-lead { color: #fff; }
+    .hero-title em { color: var(--gold); }
+    .hero-sub { color: rgba(255,255,255,0.78); }
+    .hero-cta {
+      background: var(--gold);
+      color: #fff;
+    }
+    .hero-cta:hover {
+      background: var(--gold-light);
+      color: #fff;
+    }
   }
 
   /* —— Shared —— */
@@ -1082,6 +1134,7 @@
 </div>
 
 <section class="hero" aria-label="Sherri Haskell, Medicare Strategic Specialist">
+  <div class="hero-media" role="img" aria-label="Sherri Haskell"></div>
   <div class="hero-inner">
     <div class="hero-copy">
       <h1 class="hero-title">Medicare decisions have financial <em>consequences.</em></h1>
