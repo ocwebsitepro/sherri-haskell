@@ -1,0 +1,16 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Required env vars in Netlify (Site settings → Environment variables):
+#   RESEND_API_KEY   – Resend API key
+# Optional:
+#   CONTACT_FROM     – e.g. "Sherri Haskell <hello@sherrihaskell.com>"
+#   CONTACT_TO       – admin inbox (default: Sherri@c2csmarthealth.com)

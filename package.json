@@ -1,0 +1,9 @@
+{
+  "name": "sherri-haskell",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sherri Haskell | Medicare Strategic Specialist website",
+  "dependencies": {
+    "resend": "^4.8.0"
+  }
+}

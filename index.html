@@ -1017,7 +1017,42 @@
   .form-field textarea { min-height: 110px; resize: vertical; }
   .form-field select option { color: var(--navy); background: #fff; }
   .form-actions { grid-column: 1 / -1; margin-top: 0.25rem; }
-  .form-actions .btn { width: 100%; text-align: center; }
+  .form-actions .btn {
+    width: 100%;
+    text-align: center;
+    border: 0;
+    cursor: pointer;
+    font-family: var(--sans);
+  }
+  .form-actions .btn:disabled {
+    opacity: 0.65;
+    cursor: wait;
+  }
+  .form-hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .form-status {
+    grid-column: 1 / -1;
+    margin: 0.35rem 0 0;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    line-height: 1.45;
+  }
+  .form-status.is-success {
+    background: rgba(201, 168, 76, 0.16);
+    border: 1px solid rgba(201, 168, 76, 0.45);
+    color: #f3e6bf;
+  }
+  .form-status.is-error {
+    background: rgba(180, 70, 70, 0.18);
+    border: 1px solid rgba(220, 120, 120, 0.45);
+    color: #ffd4d4;
+  }
   .privacy-note {
     font-size: 0.8rem;
     color: rgba(255,255,255,0.4);
@@ -1221,6 +1256,7 @@
     .contact-form { grid-template-columns: 1fr; }
     .form-field.full,
     .form-actions,
+    .form-status,
     .privacy-note { grid-column: auto; }
   }
 
@@ -1423,20 +1459,46 @@
     <h2 class="section-h2">Schedule Your Confidential Conversation</h2>
     <p class="contact-intro">Healthcare decisions have financial consequences. Let&rsquo;s make sure yours support the retirement you&rsquo;ve worked so hard to build.</p>
     <div class="contact-grid">
-      <div class="contact-form">
-        <div class="form-field"><label>Name</label><input type="text" placeholder="Your full name" /></div>
-        <div class="form-field"><label>Email</label><input type="email" placeholder="your@email.com" /></div>
-        <div class="form-field"><label>Phone</label><input type="tel" placeholder="(415) 000-0000" /></div>
-        <div class="form-field full"><label>Preferred Method of Contact</label><select><option>Phone</option><option>Email</option><option>Either</option></select></div>
-        <div class="form-field full"><label>What&rsquo;s on your mind? (optional)</label><textarea placeholder="Share a little about your situation..."></textarea></div>
-        <div class="form-actions"><a href="#" class="btn btn-gold">Send &rarr;</a></div>
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="form-hp" aria-hidden="true">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="form-field">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" placeholder="Your full name" required autocomplete="name" />
+        </div>
+        <div class="form-field">
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" placeholder="your@email.com" required autocomplete="email" />
+        </div>
+        <div class="form-field">
+          <label for="contact-phone">Phone</label>
+          <input id="contact-phone" name="phone" type="tel" placeholder="(415) 000-0000" required autocomplete="tel" />
+        </div>
+        <div class="form-field full">
+          <label for="contact-preferred">Preferred Method of Contact</label>
+          <select id="contact-preferred" name="preferred">
+            <option value="Phone">Phone</option>
+            <option value="Email">Email</option>
+            <option value="Either">Either</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label for="contact-message">What&rsquo;s on your mind? (optional)</label>
+          <textarea id="contact-message" name="message" placeholder="Share a little about your situation..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-gold" id="contact-submit">Send &rarr;</button>
+        </div>
+        <p class="form-status" id="contact-status" role="status" aria-live="polite" hidden></p>
         <p class="privacy-note">Your information is always kept confidential and will never be shared.</p>
-      </div>
+      </form>
       <div class="contact-details">
         <h3>Get in Touch Directly</h3>
         <div class="contact-item"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><p><a href="tel:4154047576">(415) 404-7576</a></p></div>
         <div class="contact-item"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><p><a href="mailto:Sherri@c2csmarthealth.com">Sherri@c2csmarthealth.com</a></p></div>
-        <div class="contact-item"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><p><a href="#">SherriHaskell.com</a></p></div>
+        <div class="contact-item"><span class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><p><a href="https://sherrihaskell.com/">SherriHaskell.com</a></p></div>
         <div class="contact-card-meta"><p>Sherri Haskell<br>Medicare Strategic Specialist<br>Coast to Coast Health Insurance Solutions, LLC<br>CA License #4496898</p></div>
       </div>
     </div>
@@ -1522,6 +1584,60 @@
     }
   } else {
     document.querySelectorAll('.reveal').forEach(function (n) { n.classList.add('is-in'); });
+  }
+
+  var form = document.getElementById('contact-form');
+  var statusEl = document.getElementById('contact-status');
+  var submitBtn = document.getElementById('contact-submit');
+  if (form && statusEl && submitBtn) {
+    var showStatus = function (type, message) {
+      statusEl.hidden = false;
+      statusEl.className = 'form-status is-' + type;
+      statusEl.textContent = message;
+    };
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var name = (form.elements.name.value || '').trim();
+      var email = (form.elements.email.value || '').trim();
+      var phone = (form.elements.phone.value || '').trim();
+      var preferred = form.elements.preferred.value || 'Either';
+      var message = (form.elements.message.value || '').trim();
+      var company = (form.elements.company.value || '').trim();
+
+      if (!name) return showStatus('error', 'Please enter your name.');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return showStatus('error', 'Please enter a valid email address.');
+      }
+      if (!phone) return showStatus('error', 'Please enter your phone number.');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      statusEl.hidden = true;
+
+      fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, phone: phone, preferred: preferred, message: message, company: company })
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (data) {
+            return { ok: res.ok && data.ok !== false, data: data, status: res.status };
+          });
+        })
+        .then(function (result) {
+          if (!result.ok) {
+            throw new Error((result.data && result.data.error) || 'Unable to send your request right now.');
+          }
+          form.reset();
+          showStatus('success', 'Thank you — your request was sent. Please check your email for a confirmation, and Sherri will be in touch shortly.');
+          submitBtn.textContent = 'Sent ✓';
+        })
+        .catch(function (err) {
+          showStatus('error', err.message || 'Unable to send your request right now. Please call (415) 404-7576.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send →';
+        });
+    });
   }
 })();
 </script>
