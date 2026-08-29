@@ -223,23 +223,66 @@
     max-width: 36rem;
   }
   .jump-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem;
-    margin-top: 1.75rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    justify-content: stretch;
+    align-items: stretch;
+    gap: 0.75rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    max-width: none;
+    width: 100%;
   }
   .jump-nav a {
-    color: rgba(255,255,255,0.85);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.75rem;
+    row-gap: 0.2rem;
+    align-items: start;
+    color: rgba(255,255,255,0.88);
     text-decoration: none;
+    border: 1px solid rgba(201,168,76,0.35);
+    padding: 1.05rem 1.1rem 1.1rem;
+    border-radius: var(--radius);
+    min-width: 0;
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+  }
+  .jump-nav a:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+  .jump-nav svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--gold);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    grid-row: 1 / span 2;
+    align-self: center;
+    margin-top: 0.1rem;
+  }
+  .jump-nav .jump-label {
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    border: 1px solid rgba(201,168,76,0.35);
-    padding: 0.5rem 0.85rem;
-    border-radius: var(--radius);
+    grid-column: 2;
   }
-  .jump-nav a:hover { border-color: var(--gold); color: var(--gold); }
+  .jump-nav .jump-desc {
+    font-size: 0.86rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.4;
+    grid-column: 2;
+  }
+  .jump-nav a:hover .jump-desc { color: rgba(255,255,255,0.78); }
 
   .hub { background: var(--off-white); padding: var(--pad-y) var(--pad-x) 3.5rem; }
   .hub-inner { max-width: var(--inner); margin: 0 auto; }
@@ -382,8 +425,66 @@
     display: grid;
     place-items: center;
     color: var(--gold);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
   }
-  .play-mark svg { width: 22px; height: 22px; margin-left: 3px; fill: currentColor; }
+  .play-mark:hover { background: rgba(201,168,76,0.12); border-color: var(--gold); }
+  .play-mark svg { width: 22px; height: 22px; fill: currentColor; }
+  .play-mark .icon-play { margin-left: 3px; }
+  .play-mark .icon-pause { display: none; }
+  .play-mark.is-playing .icon-play { display: none; }
+  .play-mark.is-playing .icon-pause { display: block; }
+  .player {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.55rem 0.85rem;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 0.9rem;
+  }
+  .player-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 5px;
+    grid-column: 1 / -1;
+    background: rgba(27,42,74,0.12);
+    border-radius: 99px;
+    cursor: pointer;
+  }
+  .player-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 0;
+  }
+  .player-bar::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 0;
+  }
+  .player-time {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .player-download {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .player-download:hover { color: var(--gold); }
   .listen-body, .card-body {
     padding: 1.35rem 1.45rem 1.45rem;
     display: flex;
@@ -582,6 +683,7 @@
     .listen-card { grid-template-columns: 1fr; }
     .listen-art { min-height: 160px; }
     .thumb { height: 220px; }
+    .jump-nav { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
@@ -619,12 +721,28 @@
     <h1>Medicare Decoded</h1>
     <div class="gold-rule" aria-hidden="true"></div>
     <p class="lede">Guides, charts, and practical insights for better Medicare decisions.</p>
-    <nav class="jump-nav" aria-label="On this page">
-      <a href="#listen">Watch / Listen</a>
-      <a href="#quick-reference">Quick Reference</a>
-      <a href="#guides">Guides</a>
-      <a href="#monthly-brief">Monthly Brief</a>
-    </nav>
+    <div class="jump-nav" role="navigation" aria-label="On this page">
+      <a href="#listen">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <span class="jump-label">Watch / Listen</span>
+        <span class="jump-desc">The radio interview</span>
+      </a>
+      <a href="#quick-reference">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span class="jump-label">Quick Reference</span>
+        <span class="jump-desc">2026 IRMAA &amp; Medigap charts</span>
+      </a>
+      <a href="#guides">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span class="jump-label">Guides</span>
+        <span class="jump-desc">Your Medicare Guidebook</span>
+      </a>
+      <a href="#monthly-brief">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span class="jump-label">Monthly Brief</span>
+        <span class="jump-desc">Coming soon</span>
+      </a>
+    </div>
   </div>
 </header>
 
@@ -635,16 +753,22 @@
       <div class="hub-kicker">Watch / Listen</div>
       <h2>The Greg O'Donnell Financial Hour</h2>
       <article class="listen-card">
-        <div class="listen-art" aria-hidden="true">
-          <div class="play-mark">
-            <svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg>
-          </div>
+        <div class="listen-art">
+          <button class="play-mark" id="audio-toggle" type="button" aria-label="Play interview">
+            <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><polygon points="8,5 20,12 8,19"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+          </button>
         </div>
         <div class="listen-body">
-          <div class="card-meta">Interview</div>
+          <div class="card-meta">KSFO Radio &middot; August 16, 2026</div>
           <h3>Sherri Haskell with Kim Kaselionis</h3>
           <p>How Medicare decisions intersect with income, employer coverage, and long-term financial consequences &mdash; including the questions most people never think to ask.</p>
-          <span class="coming-pill">Coming soon</span>
+          <audio id="radio-audio" src="assets/ksfo-radio-2026-08-16.mp3" preload="metadata" hidden></audio>
+          <div class="player">
+            <input class="player-bar" id="audio-seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek in interview">
+            <span class="player-time" id="audio-time">0:00 / 0:00</span>
+            <a class="player-download" href="assets/ksfo-radio-2026-08-16.mp3" download="Sherri-Haskell-KSFO-Radio-2026-08-16.mp3">Download</a>
+          </div>
         </div>
       </article>
     </section>
@@ -869,6 +993,52 @@
     dialog.addEventListener('close', function () {
       if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
     });
+  }
+
+  var audio = document.getElementById('radio-audio');
+  var toggleBtn = document.getElementById('audio-toggle');
+  var seek = document.getElementById('audio-seek');
+  var timeEl = document.getElementById('audio-time');
+  function formatTime(seconds) {
+    if (!isFinite(seconds) || seconds < 0) return '0:00';
+    var total = Math.floor(seconds);
+    var h = Math.floor(total / 3600);
+    var m = Math.floor((total % 3600) / 60);
+    var s = total % 60;
+    var mm = h ? String(m).padStart(2, '0') : String(m);
+    var ss = String(s).padStart(2, '0');
+    return h ? h + ':' + mm + ':' + ss : mm + ':' + ss;
+  }
+  function updateTime() {
+    if (!audio || !timeEl) return;
+    timeEl.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+    if (seek && audio.duration) seek.value = (audio.currentTime / audio.duration) * 100;
+  }
+  if (audio && toggleBtn) {
+    toggleBtn.addEventListener('click', function () {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    });
+    audio.addEventListener('play', function () {
+      toggleBtn.classList.add('is-playing');
+      toggleBtn.setAttribute('aria-label', 'Pause interview');
+    });
+    audio.addEventListener('pause', function () {
+      toggleBtn.classList.remove('is-playing');
+      toggleBtn.setAttribute('aria-label', 'Play interview');
+    });
+    audio.addEventListener('ended', function () {
+      toggleBtn.classList.remove('is-playing');
+      toggleBtn.setAttribute('aria-label', 'Play interview');
+    });
+    audio.addEventListener('timeupdate', updateTime);
+    audio.addEventListener('loadedmetadata', updateTime);
+    if (seek) {
+      seek.addEventListener('input', function () {
+        if (!audio.duration) return;
+        audio.currentTime = (Number(seek.value) / 100) * audio.duration;
+      });
+    }
   }
 })();
 </script>
